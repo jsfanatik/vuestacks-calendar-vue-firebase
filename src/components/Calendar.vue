@@ -48,13 +48,14 @@
         <v-card>
           <v-container>
             <v-form @submit.prevent="addEvent">
-              <v-text-field v-model="name" type="text" label="name"></v-text-field>
+
+              <v-text-field v-model="name" type="text" label="event name (required)"></v-text-field>
               <v-text-field v-model="details" type="text" label="detail"></v-text-field>
-              <v-text-field v-model="start" type="date" label="start"></v-text-field>
-              <v-text-field v-model="end" type="date" label="end"></v-text-field>
-              <v-text-field v-model="color" type="color" label="color"></v-text-field>
+              <v-text-field v-model="start" type="date" label="start (required)"></v-text-field>
+              <v-text-field v-model="end" type="date" label="end (required)"></v-text-field>
+              <v-text-field v-model="color" type="color" label="color (click to open color menu)"></v-text-field>
               <v-btn type="submit" color="primary" class="mr-4" @click.stop="dialog = false">
-                submit
+                create event
               </v-btn>
             </v-form>
           </v-container>
@@ -142,7 +143,7 @@ import { db } from "@/main"
       details: null,
       start: null,
       end: null,
-      color: null,
+      color: '#1976D2', // default event color
       currentlyEditing: null,
       selectedEvent: {},
       selectedElement: null,
@@ -212,19 +213,23 @@ import { db } from "@/main"
         this.$refs.calendar.next()
       },
       async addEvent () {
-        await db.collection("calEvent").add({
-          name: this.name,
-          details: this.details,
-          start: this.start,
-          end: this.end,
-          color: this.color
-        })
-        this.getEvents()
-        this.name = '',
-        this.details = '',
-        this.start = '',
-        this.end = '',
-        this.color = ''
+        if (this.name && this.start && this.end) {
+          await db.collection("calEvent").add({
+            name: this.name,
+            details: this.details,
+            start: this.start,
+            end: this.end,
+            color: this.color
+          })
+          this.getEvents()
+          this.name = '',
+          this.details = '',
+          this.start = '',
+          this.end = '',
+          this.color = ''
+        } else {
+          alert('You must enter event name, start, and end time')
+        }
       },
       editEvent (ev) {
         this.currentlyEditing = ev.id
