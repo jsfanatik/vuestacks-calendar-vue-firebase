@@ -3,11 +3,7 @@
     <v-col>
       <v-sheet height="64">
         <v-toolbar flat color="white">
-          <v-btn
-            color="primary"
-            dark
-            @click.stop="dialog = true"
-          >
+          <v-btn color="primary" dark @click.stop="dialog = true">
             New Event
           </v-btn>
           <v-btn outlined class="mr-4" @click="setToday">
@@ -25,10 +21,7 @@
           <v-menu bottom right>
 
             <template v-slot:activator="{ on }">
-              <v-btn
-                outlined
-                v-on="on"
-              >
+              <v-btn outlined v-on="on">
                 <span>{{ typeToLabel[type] }}</span>
                 <v-icon right>mdi-menu-down</v-icon>
               </v-btn>
@@ -90,23 +83,39 @@
           full-width
           offset-x
         >
-          <v-card color="grey lighten-4" min-width="350px" flat>
+          <v-card color="grey lighten-4" :width="350" flat>
             <v-toolbar :color="selectedEvent.color" dark>
               <v-btn @click="deleteEvent(selectedEvent.id)" icon>
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
-              <v-btn icon>
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
               <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
               <div class="flex-grow-1"></div>
             </v-toolbar>
+
             <v-card-text>
-              <span v-html="selectedEvent.details"></span>
+              <form v-if="currentlyEditing !== selectedEvent.id">
+                {{ selectedEvent.details }}
+             </form>
+              <form v-else>
+                <textarea-autosize
+                  v-model="selectedEvent.details"
+                  type="text"
+                  style="width: 100%"
+                  :min-height="100"
+                  placeholder="add note">
+                </textarea-autosize>
+              </form>
             </v-card-text>
+
             <v-card-actions>
               <v-btn text color="secondary" @click="selectedOpen = false">
-                Cancel
+                close
+              </v-btn>
+              <v-btn v-if="currentlyEditing !== selectedEvent.id" text @click.prevent="editEvent(selectedEvent)">
+                edit
+              </v-btn>
+              <v-btn text v-else type="submit" @click.prevent="updateEvent(selectedEvent)">
+                Save
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -134,6 +143,7 @@ import { db } from "@/main"
       start: null,
       end: null,
       color: null,
+      currentlyEditing: null,
       selectedEvent: {},
       selectedElement: null,
       selectedOpen: false,
@@ -215,6 +225,15 @@ import { db } from "@/main"
         this.start = '',
         this.end = '',
         this.color = ''
+      },
+      editEvent (ev) {
+        this.currentlyEditing = ev.id
+      },
+      updateEvent (ev) {
+        db.collection('calEvent').doc(this.currentlyEditing).update({
+          details: ev.details
+        })
+        this.currentlyEditing = null
       },
       async deleteEvent (ev) {
         await db.collection("calEvent").doc(ev).delete()
