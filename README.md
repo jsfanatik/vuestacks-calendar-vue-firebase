@@ -28,6 +28,10 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+### Check out https://jsfanatik.github.io to learn more about the VueStacks initiative!
+
+![alt text](https://raw.githubusercontent.com/jsfanatik/jsfanatik.github.io/master/assets/task-screen.JPG)
+
 ### Technical Overview
 
 The VueStacks calendar demo utilizes general Vue.js + Firebase CRUD functions to enable creating, updating, and deleting of events in a modified Vuetify calendar component (see the following to learn more about Vuetify calendars: https://vuetifyjs.com/en/components/calendars). The user can create a new calendar event by clicking “new event” and adding event name, details, start/end times, and event colors. The user can then edit the event detail by clicking “edit” and then update the event by clicking save. The user can delete the event by clicking the trash icon.
