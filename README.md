@@ -34,19 +34,11 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ![alt text](https://raw.githubusercontent.com/jsfanatik/jsfanatik.github.io/master/assets/cal-screen4.JPG)
 
-### Technical Overview
+### Overview
 
-The VueStacks calendar demo utilizes general Vue.js + Firebase CRUD functions to enable creating, updating, and deleting of events in a modified Vuetify calendar component (see the following to learn more about Vuetify calendars: https://vuetifyjs.com/en/components/calendars). The user can create a new calendar event by clicking “new event” and adding event name, details, start/end times, and event colors. The user can then edit the event detail by clicking “edit” and then update the event by clicking save. The user can delete the event by clicking the trash icon.
+The VueStacks calendar demo utilizes general Vue.js + Firebase CRUD functions to enable creating, updating, and deleting of events in a modified Vuetify calendar component (see the following to learn more about Vuetify calendars: https://vuetifyjs.com/en/components/calendars). 
 
-```addEvent ()``` adds the inputted event to the database collection in firebase.
-
-```deleteEvent ()``` removes the targeted event in the database.
-
-```editEvent ()``` enables updating for the targeted event.
-
-```updateEvent ()``` triggers the update of the event. 
-
-```getEvents ()``` is a callback function that updates the DOM after addEvent () and deleteEvent () have executed. 
+See full component in ```components/Calendar.vue```
 
 ### Addition Dependencies
 
