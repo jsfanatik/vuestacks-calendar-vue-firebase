@@ -71,4 +71,4 @@ firebase.initializeApp({
 
 export const db = firebase.firestore();
 ```
-
+Enjoy the demo! Submit an issue if you see anything that could be improved!
