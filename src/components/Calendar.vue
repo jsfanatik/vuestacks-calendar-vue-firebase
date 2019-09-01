@@ -15,11 +15,9 @@
           <v-btn fab text small @click="next">
             <v-icon small>mdi-chevron-right</v-icon>
           </v-btn>
-
           <v-toolbar-title>{{ title }}</v-toolbar-title>
           <div class="flex-grow-1"></div>
           <v-menu bottom right>
-
             <template v-slot:activator="{ on }">
               <v-btn outlined v-on="on">
                 <span>{{ typeToLabel[type] }}</span>
@@ -48,7 +46,6 @@
         <v-card>
           <v-container>
             <v-form @submit.prevent="addEvent">
-
               <v-text-field v-model="name" type="text" label="event name (required)"></v-text-field>
               <v-text-field v-model="details" type="text" label="detail"></v-text-field>
               <v-text-field v-model="start" type="date" label="start (required)"></v-text-field>
@@ -238,6 +235,7 @@ import { db } from "@/main"
         db.collection('calEvent').doc(this.currentlyEditing).update({
           details: ev.details
         })
+        this.selectedOpen = false,
         this.currentlyEditing = null
       },
       async deleteEvent (ev) {
