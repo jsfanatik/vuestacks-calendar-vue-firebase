@@ -124,7 +124,7 @@
 </template>
 
 <script>
-import { db } from "@/main"
+import { db } from '@/main'
   export default {
     data: () => ({
       today: new Date().toISOString().substr(0, 10),
@@ -231,8 +231,8 @@ import { db } from "@/main"
       editEvent (ev) {
         this.currentlyEditing = ev.id
       },
-      updateEvent (ev) {
-        db.collection('calEvent').doc(this.currentlyEditing).update({
+      async updateEvent (ev) {
+        await db.collection('calEvent').doc(this.currentlyEditing).update({
           details: ev.details
         })
         this.selectedOpen = false,
